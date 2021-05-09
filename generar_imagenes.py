@@ -3,19 +3,24 @@ import os
 import imutils
 
 personName = 'Alfredo'
+person2Name = 'Gisell'
+person3Name = 'Milagros'
 personVideo = 'Alfredo.mp4'
-dataPath = 'C:/Users/alfre/Codex/upn-reconocimiento-facial/data'
-personPath = dataPath + '/' + personName
+person2Video = 'Gisell.mp4'
+dataPath = os.path.dirname(os.path.realpath(__file__)) + '/data'
+#dataPath = 'C:/Users/alfre/Codex/upn-reconocimiento-facial/data'
+personPath = dataPath + '/' + person3Name
 
 if not os.path.exists(personPath):
     print('Carpeta creada: ', personPath)
     os.makedirs(personPath)
 
-cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+cap = cv2.VideoCapture(0)
 #cap = cv2.VideoCapture(personVideo)
 
 faceClassif = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-count = 400
+count = 0
+#count = 500
 
 while True:
 
@@ -36,7 +41,8 @@ while True:
     cv2.imshow('frame', frame)
 
     k = cv2.waitKey(1)
-    if k == 27 or count >= 500:
+    if k == 27 or count >= 300:
+    #if k == 27 or count >= 600:
         break
 
 cap.release()

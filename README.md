@@ -1,15 +1,14 @@
 # Reconocimiento Facial Python
 
-## Instalando dependencias
+## Dependencias
+* Python 3
+* opencv-python
+* imutils
+* opencv-contrib-python
 
+## Instalando dependencias
 ```bash
-pip install opencv-python
-```
-```bash
-pip install imutils
-```
-```bash
-pip install opencv-contrib-python
+pip3 install -r requirements.txt
 ```
 
 ## Uso
@@ -17,14 +16,14 @@ pip install opencv-contrib-python
 Ejecutar los scripts secuencialmente cambiando
 las rutas segun la ubicación de los archivos
 
-# Generación de imagenes para alimentar el modelo
+### Generación de imagenes para alimentar el modelo
 
 generar_imagenes.py
 
-# Generación modelo
+### Generación modelo
 
 generar_modelo.py
 
-# Reconocimiento facial
+### Reconocimiento facial
 
 main.py

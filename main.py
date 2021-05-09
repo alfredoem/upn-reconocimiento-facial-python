@@ -1,12 +1,15 @@
 import cv2
 import os
+import datetime
 
-personVideo = 'Alfredo.mp4'
+person1Video = 'Alfredo.mp4'
 person2Video = 'Alfredo2.mp4'
-person3Video = 'Kampus2.mp4'
-person7Video = 'Sara2.mp4'
+person3Video = 'Sara2.mp4'
+person4Video = 'William2.mp4'
+person5Video = 'Gisell.mp4'
 
-dataPath = 'C:/Users/alfre/Codex/upn-reconocimiento-facial/data'
+dataPath = os.path.dirname(os.path.realpath(__file__)) + '/data'
+#dataPath = 'C:/Users/alfre/Codex/upn-reconocimiento-facial/data'
 imagePaths = os.listdir(dataPath)
 print('imagePaths=', imagePaths)
 
@@ -15,11 +18,10 @@ face_recognizer = cv2.face.EigenFaceRecognizer_create()
 # Leyendo el modelo
 face_recognizer.read('modeloEigenFace.xml')
 
-#cap = cv2.VideoCapture(0,cv2.CAP_DSHOW)
-cap = cv2.VideoCapture(personVideo)
+#cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(person1Video)
 
 faceClassif = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-
 
 def rescale_frame(frame, percent=75):
     width = int(frame.shape[1] * percent/ 100)
@@ -27,6 +29,8 @@ def rescale_frame(frame, percent=75):
     dim = (width, height)
     return cv2.resize(frame, dim, interpolation =cv2.INTER_AREA)
 
+
+marcaciones = {'Gisell': [], 'Alfredo': [], 'Milagros': []}
 while True:
     ret, frame = cap.read()
     if ret == False: break
@@ -43,7 +47,12 @@ while True:
         cv2.putText(frame, '{}'.format(result), (x, y - 5), 1, 1.3, (255, 255, 0), 1, cv2.LINE_AA)
 
         # EigenFaces
-        if result[1] < 3800:
+        if result[1] < 3600:
+            if not marcaciones[imagePaths[result[0]]]:
+                nombre = imagePaths[result[0]]
+                hora_marcacion = datetime.datetime.now()
+                print('Marcación de {}, registrada a las : {}'.format(nombre, hora_marcacion))
+                marcaciones[nombre].append(hora_marcacion)
             cv2.putText(frame,'{}'.format(imagePaths[result[0]]),(x,y-25),2,1.1,(0,255,0),1,cv2.LINE_AA)
             cv2.rectangle(frame, (x,y),(x+w,y+h),(0,255,0),2)
         else:
