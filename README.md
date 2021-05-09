@@ -17,11 +17,14 @@ pip install opencv-contrib-python
 Ejecutar los scripts secuencialmente cambiando
 las rutas segun la ubicación de los archivos
 
-#Generación de imagenes para alimentar el modelo
+# Generación de imagenes para alimentar el modelo
+
 generar_imagenes.py
 
-#Generación modelo
+# Generación modelo
+
 generar_modelo.py
 
-#Reconocimiento facial
+# Reconocimiento facial
+
 main.py
