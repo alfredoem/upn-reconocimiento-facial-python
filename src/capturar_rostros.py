@@ -4,8 +4,8 @@ import imutils
 
 
 class CapturarRostros:
-
-    DATASET_ROSTROS = dataPath = os.path.dirname(os.path.realpath(__file__)) + '/data'
+    DIR_NAME = os.path.dirname(os.path.realpath(__file__))
+    DATASET_ROSTROS = '{}/../data'.format(DIR_NAME)
     CLASIFICADOR = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
     LIMITE_CAPTURAS = 300
 
@@ -20,7 +20,7 @@ class CapturarRostros:
         self.capturar(fuente)
 
     def desde_video(self, video):
-        fuente = cv2.VideoCapture(video)
+        fuente = cv2.VideoCapture('{}/../videos/{}'.format(self.DIR_NAME, video))
         self.capturar(fuente)
 
     def capturar(self, fuente):
@@ -53,8 +53,8 @@ class CapturarRostros:
             os.makedirs(self.folder_persona)
 
 
-generador = CapturarRostros('Borrar1')
-generador.desde_video('Sara2.mp4')
+generador = CapturarRostros('Borrar93')
+generador.desde_video('William2.mp4')
 #generador.desde_camara()
 
 

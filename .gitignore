@@ -1,6 +1,6 @@
 venv
 .idea
-modeloEigenFace.xml
+*.xml
 data
 *.mp4
 __pycache__/

@@ -4,11 +4,11 @@ import datetime
 
 
 class ReconocerPersonas:
-
-    DATASET_ROSTROS = dataPath = os.path.dirname(os.path.realpath(__file__)) + '/data'
+    DIR_NAME = os.path.dirname(os.path.realpath(__file__))
+    DATASET_ROSTROS = '{}/../data'.format(DIR_NAME)
     LISTA_PERSONAS = os.listdir(DATASET_ROSTROS)
     CLASIFICADOR = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-    MODELO_RECONOCIMIENTO = 'modeloEigenFace.xml'
+    MODELO_RECONOCIMIENTO = '{}/../{}'.format(DIR_NAME, 'modelo_reco_entrenado.xml')
 
     def reducir_cuadro(self, cuadro, porcentaje):
         ancho = int(cuadro.shape[1] * porcentaje / 100)
@@ -20,11 +20,11 @@ class ReconocerPersonas:
         self.__reconocer(fuente)
 
     def desde_video(self, video):
-        fuente = cv2.VideoCapture(video)
+        fuente = cv2.VideoCapture('{}/../videos/{}'.format(self.DIR_NAME, video))
         self.__reconocer(fuente)
 
     def __reconocer(self, fuente):
-        marcaciones = {'Gisell': [], 'Alfredo': [], 'Milagros': []}
+        marcaciones = {'Gisell': [], 'Alfredo': []}
         modelo = cv2.face.EigenFaceRecognizer_create()
         modelo.read(self.MODELO_RECONOCIMIENTO)
         while True:
@@ -54,7 +54,7 @@ class ReconocerPersonas:
                     cv2.rectangle(frame_video, (x, y), (x + w, y + h), (0, 0, 255), 2)
 
             frame_video_reducido = self.reducir_cuadro(frame_video, 75)
-            cv2.imshow("Marcacion Biometrica", frame_video)
+            cv2.imshow("Marcacion Biometrica", frame_video_reducido)
             tecla = cv2.waitKey(1)
             if tecla == 27:
                 break
