@@ -18,7 +18,6 @@ class GenerarModelo:
             for imagen in os.listdir(dataset_persona):
                 self.lista_etiquetas.append(self.contador_etiquetas)
                 self.lista_rostros.append(cv2.imread(dataset_persona + '/' + imagen, 0))
-                image = cv2.imread(dataset_persona + '/' + imagen, 0)
             self.contador_etiquetas = self.contador_etiquetas + 1
 
     def generar(self):
