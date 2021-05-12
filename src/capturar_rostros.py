@@ -5,14 +5,14 @@ import imutils
 
 class CapturarRostros:
     DIR_NAME = os.path.dirname(os.path.realpath(__file__))
-    DATASET_ROSTROS = '{}/../data'.format(DIR_NAME)
+    DATASET_ROSTROS = DIR_NAME + os.sep + '..' + os.sep + 'data'
     # Detector de rostros
     CLASIFICADOR = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
     LIMITE_CAPTURAS = 300
 
     def __init__(self, nombre_persona):
         self.nombre_persona = nombre_persona
-        self.folder_persona = "{}/{}".format(self.DATASET_ROSTROS, nombre_persona)
+        self.folder_persona = self.DATASET_ROSTROS + os.sep + nombre_persona
         self.contador_imagenes = 0
         self.crear_folder()
 
@@ -21,7 +21,7 @@ class CapturarRostros:
         self.capturar(fuente)
 
     def desde_video(self, video):
-        fuente = cv2.VideoCapture('{}/../videos/{}'.format(self.DIR_NAME, video))
+        fuente = cv2.VideoCapture(self.DIR_NAME + os.sep + '..' + os.sep + 'videos' + os.sep + video)
         self.capturar(fuente)
 
     def capturar(self, fuente):
@@ -41,13 +41,13 @@ class CapturarRostros:
             rostros = self.CLASIFICADOR.detectMultiScale(frame_video_gris, 1.3, 5)
             for (x, y, w, h) in rostros:
                 # Dibuja un cuadro color verde en la posición del rostro
-                cv2.rectangle(frame_video, (x, y), (x + w, y + h), (0, 255, 0), 1)
+                cv2.rectangle(frame_video, (x, y), (x + w, y + h), (0, 255, 0), 2)
                 # Obtenemos el rostro del fotograma original (a color) en base a las coordenadas
                 rostro = copia_frame_video[y:y + h, x:x + w]
                 # Reducimos el tamaño del rostro capturado aplicando una interpolación bicubica
                 rostro = cv2.resize(rostro, (150, 150), interpolation=cv2.INTER_CUBIC)
                 # Guardamos la imagen del rostro capturado en la ubicación indicada
-                cv2.imwrite(self.folder_persona + '/rotro_{}.jpg'.format(self.contador_imagenes), rostro)
+                cv2.imwrite(self.folder_persona + os.sep + 'rotro_' + str(self.contador_imagenes) + '.jpg', rostro)
                 self.contador_imagenes = self.contador_imagenes + 1
             # Mostramos todos los fotogramas que estamos procesando
             cv2.imshow('Capturando Rostros', frame_video)
@@ -56,9 +56,8 @@ class CapturarRostros:
             if tecla == 27 or self.contador_imagenes >= self.LIMITE_CAPTURAS:
                 # Si presionamos la tecla ESC o si llegamos a capturar mas de 300 rostros, terminamos el proceso
                 break
-        # Liberamos la fuente (video o camara)
+        # Liberamos la fuente (video o camara) y eliminamos todas las ventanas
         fuente.release()
-        # Eliminamos todas las ventanas
         cv2.destroyAllWindows()
 
     def crear_folder(self):
@@ -67,6 +66,6 @@ class CapturarRostros:
             os.makedirs(self.folder_persona)
 
 
-generador = CapturarRostros('Sara')
-generador.desde_video('Sara2.mp4')
+generador = CapturarRostros('Alfredo')
 # generador.desde_camara()
+generador.desde_video('Alfredo.mp4')
