@@ -33,12 +33,13 @@ class CapturarRostros:
                 break
             # reducimos el tamaño del fotograma
             frame_video = imutils.resize(frame_video, width=640)
-            # convierte el fotograma a escala de grises
+            # Convierte el fotograma a escala de grises
             frame_video_gris = cv2.cvtColor(frame_video, cv2.COLOR_BGR2GRAY)
-            # guardamos el fotograma original
+            # Guardamos una copia del fotograma original
             copia_frame_video = frame_video.copy()
             # Devuelve las coordenadas de los rostros capturados del fotograma
             rostros = self.CLASIFICADOR.detectMultiScale(frame_video_gris, 1.3, 5)
+
             for (x, y, w, h) in rostros:
                 # Dibuja un cuadro color verde en la posición del rostro
                 cv2.rectangle(frame_video, (x, y), (x + w, y + h), (0, 255, 0), 2)
@@ -49,7 +50,7 @@ class CapturarRostros:
                 # Guardamos la imagen del rostro capturado en la ubicación indicada
                 cv2.imwrite(self.folder_persona + os.sep + 'rotro_' + str(self.contador_imagenes) + '.jpg', rostro)
                 self.contador_imagenes = self.contador_imagenes + 1
-            # Mostramos todos los fotogramas que estamos procesando
+            # Mostramos los fotogramas que estamos procesando
             cv2.imshow('Capturando Rostros', frame_video)
 
             tecla = cv2.waitKey(1)
@@ -67,5 +68,5 @@ class CapturarRostros:
 
 
 generador = CapturarRostros('Alfredo')
-# generador.desde_camara()
-generador.desde_video('Alfredo.mp4')
+generador.desde_camara()
+# generador.desde_video('Alfredo.mp4')
