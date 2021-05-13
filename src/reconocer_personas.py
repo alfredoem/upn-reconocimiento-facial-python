@@ -12,7 +12,7 @@ class ReconocerPersonas:
     # Detector de rostros
     CLASIFICADOR = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
     # Modelo entrenado con las capturas de rostros de las personas indicadas para su reconocimiento
-    MODELO_RECONOCIMIENTO = DIR_NAME + os.sep + '..' + os.sep + 'modelo_reco_entrenado.xml'
+    MODELO_RECONOCIMIENTO = DIR_NAME + os.sep + 'modelo_reco_entrenado.xml'
     # Archivo de "base de datos" en formato JSON para almacenar las marcaciones
     BD_MARCACIONES = 'marcaciones.json'
 
